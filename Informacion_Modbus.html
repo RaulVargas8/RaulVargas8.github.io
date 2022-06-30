@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>   
+ 
+        <style>
+        .disclaimer {display:none}
+        </style>
+        <meta charset="utf-8">
+        <title>Protocolo Modbus</title>
+<style>
+		 ul {  
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+			overflow: hidden;
+			background-color: #000;
+			font-family: 'Verdana';
+			opacity: 0.97;
+			
+		  }  
+
+		li {
+			float: left;
+		}
+
+		li a, .dropbtn {
+			display: inline-block;
+			color: white;
+			text-align: center;
+			padding: 14px 16px;
+			text-decoration: none;
+			font-family: 'Verdana';
+		}
+
+		li a:hover, .dropdown:hover .dropbtn {
+			background-color: #009999;
+		}
+
+		li.dropdown {
+			display: inline-block;
+		}
+
+		.dropdown-content {
+			display: none;
+			position: absolute;
+			background-color: #333;
+			min-width: 160px;
+			box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+			font-family: 'Verdana';
+		}
+
+		.dropdown-content a {
+			color: white;
+			padding: 12px 16px;
+			text-decoration: none;
+			display: block;
+			text-align: left;
+			font-family: 'Verdana';
+		}
+
+		 
+ 
+        .dropdown-content a:hover {
+		background-color: #D7D7D7;
+		color: black;
+        }
+ 
+		.dropdown:hover .dropdown-content 
+		{
+			display: block;
+		}
+
+
+		
+		    p {  
+          font-family: Verdana;  
+
+          }  
+		  
+		  
+		  label {
+          display: block;
+          font: 'Verdana';
+          }
+
+          input, label {
+          margin: .4rem 0;
+          }
+		  
+		  
+		table {
+				border-collapse: collapse;
+				font-family:Verdana; 
+				align: center;
+				margin: 10px 10px;
+				
+                }
+				
+        table td {
+	            padding: 15px;
+				
+				
+                }
+				
+		table thead td {
+			background-color: #54585d;
+			color: #ffffff;
+			font-weight: bold;
+			font-size: 13px;
+			border: 1px solid #54585d;
+			text-align: center;
+		}
+		
+		table tbody td {
+			color: #636363;
+			border: 1px solid #DADADA;
+			color: black;
+		}
+		
+		table tbody tr {
+			background-color: #f9fafb;
+		}
+		
+		table tbody tr:nth-child(odd) {
+			background-color: #ffffff;
+		}
+		  
+		  
+	 
+
+ 
+</style>
+
+
+                          <link rel="icon" href="imagenes/LogoFI.jpg">  
+
+
+
+
+</head>
+<body> 
+                    
+					
+					<style>
+					body{
+					margin:0;
+					min-height:100vh;
+					
+					background-image:url('imagenes/PLCBackground.jpg');
+					background-repeat: no-repeat;
+					background-size: cover;
+					background-position: center;
+					background-attachment: fixed;
+					}
+					</style>
+					
+					<style>
+					body:before{
+				    content:"";
+					width: 90%;
+					min-height: 1035vh;
+					position:absolute;
+					top: 10%; 
+					left:5%; 
+					
+					background: black;
+					opacity: 0.9;
+					z-index: -1;
+					}		
+					</style>
+					
+					
+					<ul>
+						  <li><a class="active" href="index.html">Inicio</a></li>
+						  <li><a href="">Actualizaciones</a></li>	
+						  <li class="dropdown">
+											<a href="" class="dropbtn">Documentos</a>
+											  <div class="dropdown-content">
+											  <a href="archivos/Manual_proyecto_final.pdf" target=”_blank”> Manual del proyecto </a>
+											  <a href="archivos/Manual_emco.pdf" target=”_blank”> Manual emco VMC-100</a>
+											   <a href="archivos/Manual_electrico_emco.pdf" target=”_blank”> Documentación eléctrica emco VMC-100</a>
+                                              <a href="archivos/Manual_PMC-2HSP_2HSN.pdf" target=”_blank”>Manual del controlador de movimiento (PMC-2HSP-2HSN)</a>
+											  <a href="archivos/Manual_MD5_HD14.pdf" target=”_blank”>Manual del driver para los motores (MD5-HD14)</a>											  
+											  
+											  </div>
+						   </li>
+						   
+						   <li><a href="">Ayuda</a></li>
+							
+						   <li class="dropdown">
+											<a href="" class="dropbtn">?</a>
+											  <div class="dropdown-content">
+											  <a href="Pagina_AcercaDe.html"> Acerca de nosotros </a>
+											  <a href="Pagina_version.html" > Versión </a>		  
+											  </div>
+						   </li>
+						   		   
+					</ul>
+					<br> 
+					 <br>
+					 <HR align="center" size="2" width="1100" color= #009999 noshade>	
+	<center>
+	  <body> 
+							 
+				             
+							<b>  
+							<h2> 
+							<p style="color:white;">¿Cómo se establece la comunicación Modbus-RTU? </p>
+							</h2>  
+							</b> 
+		<center
+						  <p style="color:white; width: 60%; text-align: justify;"> 
+							   
+							<font face="Verdana"> 
+							El SIMATIC S7-1200 permite la comunicación punto a punto a través
+							de la extensión del CPU con las interfaces RS485 y RS232. Puede ampliar
+							cada controlador S7-1200 hasta tres módulos de comunicación (+ una tarjeta 
+							de comunicación RS485). Mediante la biblioteca Modbus integrada en STEP 7 
+							(TIA Portal) puede definir cada módulo de comunicación como maestro o esclavo
+							Modbus. Si selecciona Maestro Modbus, podrá comunicar:   
+							<br>
+							<br> 
+							  1. Con un solo esclavo utilizando el CM 1241 RS232 (limitación física).
+							  <br>  
+							  2. Con hasta 10 esclavos uno tras otro utilizando el RS422 (a través del CM 1241 RS422/RS485).
+							  <br>  
+							  3. Con hasta 32 esclavos uno tras otro utilizando el RS485 (a través de CM o CB 1241 RS485).
+							  <br> 
+							  <br>      
+																		      
+																			   
+						 Hemos tomado el ejemplo de la comunicación Modbus entre un maestro y un esclavo.
+						 Se alterna la escritura en el registro de retención del esclavo (código de función 16) 
+						 y la lectura del registro de retención del esclavo (código de función 03). Dado que el 
+						 RS485 tiene una interfaz de dos hilos (semidúplex), la escritura y la lectura deben 
+						 realizarse de forma consecutiva. Por el mismo principio, la dirección 
+						 del esclavo que debe ser; puede cambiarse entre dos acciones (aquí la escritura y la lectura), 
+						 permitiendo así el intercambio de datos con varios esclavos.    
+						 <br> 
+						 <br> 
+						 <br> 
+						 
+						 
+						  <div style="text-align: center;">
+						  <img src="imagenes/Conexion_modbus2.png">
+						  </div>
+						 
+						<br> 
+						<br> 
+						<br>
+																										
+						 Los módulos de comunicación CM 1241 RS485 están conectados entre sí mediante un cable PROFIBUS.
+						 Se puede continuar con el cable PROFIBUS para conectar hasta 31 esclavos Modbus adicionales al maestro. 
+						 La configuración se realiza en STEP 7 (TIA Portal) y el código de programa se transfiere a los
+						 controladores con el conmutador CSM 1277. 
+
+						 <br>
+						 <br>
+						 <br>
+						 						 
+						 <HR align="CENTER" size="2" width="600" color= #009999 noshade> 
+						 
+						  <div style="text-align: center;">      
+						<h3> 
+						<p style="color:white;">Biblioteca de aplicaciones "Modbus (RTU)"</p>
+						</h3> 
+						  </div>
+								                                                                             
+																											 
+						 Los bloques necesarios se encuentran en STEP 7 (TIA Portal) en las instrucciones
+						 de comunicación en el apartado "Procesador de comunicación" de la carpeta "Modbus (RTU)".  
+						 <br> 
+						 <br>
+						 <br> 
+						 <br>
+						
+						<HR align="CENTER" size="2" width="600" color= #009999 noshade> 
+						
+						<div style="text-align: center;">
+						<h3> 
+						<p style="color:white;">Modbus_Comm_Load</p>
+						</h3> 
+						</div>
+						
+						El bloque de configuración "Modbus_Comm_Load" se llama en ambos lados (maestro y esclavo) para la comunicación
+						Modbus. 
+						<br> 
+						<br>
+						 
+						  <div style="text-align: center;">
+						  <img src="imagenes/modbus_comm_load.PNG" width="500px">
+						  </div>
+																			 
+																				
+						<br>
+						<br>
+						
+						El bloque "Modbus_Comm_Load" se utiliza para seleccionar el módulo de comunicación, establecer los 
+						parámetros de comunicación y parametrizar la conexión con los parámetros del maestro o del esclavo. 
+						El bloque "Modbus_Comm_Load" debe llamarse en el primer ciclo del programa (activando la "Llamada inicial"
+						de un OB cíclico, por ejemplo, o como llamada en el OB 100 de inicio).
+						<br> 
+						<br>
+						Después de insertar el módulo de comunicación en la configuración del hardware puede seleccionar 
+						el nombre simbólico del módulo de comunicación en el parámetro el parámetro PORT. Los parámetros de 
+						comunicación BAUD (velocidad de transmisión) y PARITY (paridad) deben ser idénticos para todos los nodos.
+						La configuración del puerto de la La configuración del puerto de la interfaz RS485 en la vista de dispositivos
+						de STEP 7 (TIA Portal) es irrelevante en este caso. El parámetro parámetro "MB_DB" del bloque de datos de
+						instancia del bloque maestro o esclavo se se transfiere al parámetro MB_DB y, por tanto, define el módulo
+						de comunicación (parámetro PORT) como maestro o esclavo Modbus. 
+						<br> 
+						<br>
+																				
+						 												
+						  <table>
+								<thead>
+								 
+									<tr>
+										<td>Parámetro</td>
+										<td>Descripción</td>
+										<td>Tipo de dato</td>
+									</tr>
+									 
+								</thead>
+						  <tbody>
+							<tr>
+								<td>EN</td>
+								<td> Un cambio de señal low a high (flanco ascendente) lanza la operación.</td>
+								<td>Bool</td>
+								
+							</tr>
+							
+							<tr>
+								<td>REQ</td>
+								<td> Un cambio de señal low a high (flanco ascendente) lanza la operación.</td>
+								<td>Bool</td>
+							</tr>
+							
+							<tr>
+								<td>PORT</td>
+								<td>Tras haber instalado y configurado un dispositivo de comunicación CM o CB,
+								el identificador de puerto aparece en la lista desplegable de parámetros disponible 
+								en la conexión del cuadro PORT. El valor de puerto CM o CB asignado es la propiedad 
+								de configuración del dispositivo "identificador de hardware". El nombre simbólico 
+								del puerto se asigna en la ficha "Constantes del sistema" de la tabla de variables PLC. </td>
+								
+								<td>Port</td>
+							</tr>
+							<tr>
+								<td>BAUD</td>
+								<td>Selección de la velocidad de transferencia.</td>
+								<td>UDInt</td>
+							</tr>
+							<tr>
+								<td>PARITY</td>
+								<td> Selección de paridad: <br>
+
+										0 – Ninguna. <br>
+										1 – Impar. <br>
+										2 – Par.  <br> </td>
+								<td>UInt</td>
+							</tr>
+							<tr>
+								<td>FLOW_CTRL</td>
+								<td>Selección del control de flujo:<br>
+
+									0 – (ajuste predeterminado) sin control de flujo.<br>
+									1 – Control de flujo por hardware con RTS siempre ON (no es aplicable a los puertos RS485).<br>
+									2 – Control de flujo por hardware con RTS conmutado.<br>
+									</td>
+								<td>UInt</td>
+							</tr>
+							<tr>
+								<td>RTS_ON_DLY</td>
+								<td> 	
+									Selección de retardo RTS ON:<br>
+
+									0 – (ajuste predeterminado) Sin retardo desde RTS ON hasta que se transmite el primer carácter del mensaje. <br>
+									1 a 65535 – Retardo en milisegundos desde RTS ON hasta que se transmite el primer carácter del mensaje 
+									(no es aplicable a los puertos RS485). 
+									Los retardos RTS se aplican siempre independientemente de la selección de FLOW_CTRL.</td>
+								<td>UInt</td>
+							</tr>
+							<tr>
+								<td>RTS_OFF_DLY</td>
+								<td> Selección de retardo RTS OFF:<br>
+
+									0 – (ajuste predeterminado) Sin retardo desde el último carácter transmitido hasta que se desactiva RTS<br>
+									1 a 65535 – Retardo en milisegundos desde el último carácter transmitido hasta que se 
+									desactiva RTS (no es aplicable a los puertos RS485). Los retardos RTS se aplican siempre 
+									independientemente de la selección de FLOW_CTRL. </td>
+								<td>UInt</td>
+							</tr>
+							<tr>
+								<td>RESP_TO</td>
+								<td> Plazo de respuesta:<br>
+
+									Tiempo en milisegundos permitido por el Modbus_Master para la respuesta del esclavo.
+									Si el esclavo no responde en este tiempo, Modbus_Master repetirá la petición o la
+									finalizará con un error cuando se haya enviado el número de reintentos indicado.<br>
+
+									5 ms a 65535 ms (valor predeterminado = 1000 ms).</td>
+								<td>UInt</td>
+							</tr>
+							<tr>
+								<td>MB_DB</td>
+								<td> Referencia al bloque de datos de instancia que utilizan las instrucciones
+									 Modbus_Master o Modbus_Slave. Una vez insertadas las instrucciones Modbus_Master 
+									 o Modbus_Slave en el programa, el identificador de DB aparece en la lista 
+									 desplegable de parámetros disponible en la conexión del cuadro MB_DB.</td>
+								<td>Variant</td>
+							</tr>
+							
+						</tbody>
+					</table>
+						 													
+																				
+					<br> 
+					<br>
+					Además, debe cambiar el parámetro estático MODE en los datos de instancia de "Modbus_Comm_Load" para 
+					el modo de funcionamiento dúplex, preferiblemente a través del valor de inicio.
+					<br>
+					<br>
+					
+					0 = full duplex (RS232).
+					<br>
+					1 = full duplex (RS422) modo de cuatro hilos.
+					<br>
+					4 = half dúplex (RS485) modo de dos hilos.
+					<br>
+
+					<br>
+					<br> 
+					
+					
+					<HR align="CENTER" size="2" width="600" color= #009999 noshade> 
+					<div style="text-align: center;">
+					<h3> 
+					<p style="color: white;"> Modbus_Master </p>
+					</h3> 
+					</div>
+					
+					Con el bloque "Modbus_Master" se define como maestro Modbus el módulo de 
+					comunicación seleccionado en el bloque de configuración "Modbus_Comm_Load". 
+					<br>
+					<br> 
+																				
+					<div style="text-align: center;">
+					  <img src="imagenes/modbus_master.PNG" width="500px">
+					  </div>
+					  
+					<br>
+					<br> 
+					
+					El bloque "Modbus_Master" se utiliza para seleccionar el esclavo Modbus a
+					direccionar, seleccionar el código de función y definir el área de 
+					almacenamiento de datos local. La tabla siguiente explica los parámetros. 
+					
+					<br>
+					<br> 
+																				
+					 									 	
+							<table>
+								<thead>
+									<tr>
+										<td>Parámetro</td>
+										<td>Descripción</td>
+									</tr>
+								</thead>
+								
+								
+								<tbody>
+									<tr>
+										<td>REQ</td>
+										<td>Permite la comunicación. </td>
+									</tr>
+									
+									<tr>
+										<td>MB_ADDR</td>
+										<td>Dirección de la estación Modbus-RTU. </td>
+									</tr>
+									
+									<tr>
+										<td>MODE</td>
+										<td>Selecciona el sentido de la transmisión ("0" = lectura, "1" = escritura <br> o funciones adicionales de diagnóstico funciones adicionales). </td>
+									</tr>
+									
+									<tr>
+										<td>DATA_ADDR</td>
+										<td>Especifica la dirección de inicio de Modbus.</td>
+									</tr>
+									
+									<tr>
+										<td>DATA_LEN</td>
+										<td> Especifica la longitud de los datos Modbus. </td>
+									</tr>
+									
+									<tr>
+										<td>DATA_PTR </td>
+										<td>Define las áreas de datos locales de recepción y envío del maestro. El parámetro DATA_PTR debe referirse 
+										a un bloque de datos global cuyo atributo "Acceso de bloque optimizado" haya sido desactivado.</td>
+									</tr>
+									
+								</tbody>
+							</table>	
+											 
+					    <br>
+					    <br>
+						
+
+                        <HR align="CENTER" size="2" width="600" color= #009999 noshade> 						
+						<div style="text-align: center;">
+						<h3> 
+						<p style="color:white;">Modbus_Slave</p>
+						</h3> 
+						</div>
+																				        
+						 Con el bloque "Modbus_Slave" se define como esclavo Modbus el módulo de comunicación 
+						 seleccionado con el bloque de configuración "Modbus_Comm_Load".  
+
+						 <br>
+						 <br>
+																						 
+						 <div style="text-align: center;">
+						 <img src="imagenes/modbus_slave.png" width="500px">
+						 </div>
+																						  
+						 <br> 
+						 <br>
+						 El bloque "Modbus_Slave" se utiliza para definir la dirección de la estación 
+						 Modbus-RTU y especificar el área de almacenamiento de datos local para la 
+						 transferencia de datos del registro de retención.
+				
+						 <br>
+						 <br>
+																						 
+						<table>
+							<thead>
+								<tr>
+									<td>Parámetro</td>
+									<td>Descripción</td>
+								</tr>
+								 
+							</thead>
+							<tbody>
+								<tr>
+									<td>MB_ADDR</td>
+									<td>Transfiere la dirección de la estación Modbus-RTU. </td>
+								</tr>
+								
+								<tr>
+									<td>MB_HOLD_REG</td>
+									<td>Registro de retención del esclavo. El parámetro MB_HOLD_REG 
+									debe referirse a un bloque de datos bloque de datos global cuyo 
+									atributo "Acceso optimizado al bloque" haya sido desactivado.</td>
+								</tr> 
+								   
+							</tbody>
+						</table>
+																					
+				<br>
+				En el parámetro "MB_HOLD_REG" se transfiere un array del tipo de datos "Word". 
+				El tamaño del array en el parámetro "MB_HOLD_REG" debe ser lo suficientemente grande como para
+				cubrir el volumen de datos especificado del maestro (DATA_ADDR y DATA_PTR).
+				La primera palabra del array corresponde a la dirección inicial 40001 del registro de retención 
+				Modbus.
+				<br>
+				<br>
+				
+				<HR align="CENTER" size="2" width="600" color= #009999 noshade> 
+				        <div style="text-align: center;">
+						<h3> 
+						<p style="color:white;">Flujo del proyecto Modbus</p>
+						</h3> 
+						</div>
+						
+				En el proyecto maestro, la escritura/lectura alterna del registro de 
+				retención del esclavo se realiza a través de un secuenciador. 
+				<br>
+				<br>
+				         <div style="text-align: center;">
+						 <img src="imagenes/Flujo_modbus.png" width="400px">
+						 </div>
+				
+				<br>
+				<br>
+				
+				1. El bloque de configuración "Modbus_Comm_Load" se llama en la inicialización paso 0. 
+				<br>
+				<br>
+                2. En el paso 1, se copian los datos a escribir en el DATA_PTR y se llama al 
+				"Modbus_Master" con los parámetros de comunicación para escribir en el esclavo 
+				(MODE = 1) es llamado y ejecutado (REQ = 1). 
+				<br>
+				<br>
+				- La transición al Paso 2 se realiza mediante la retroalimentación de ejecución (BUSY) del
+				"Modbus_Master".
+				<br>
+				- La transición al Paso 3 se realiza mediante la retroalimentación de éxito (DONE) del
+				"Modbus_Master".
+				<br>
+				- La transición reinicia la ejecución del "Modbus_Master" (REQ = 0).
+				<br>
+				<br>
+				3. En el paso 3, el parámetro de comunicación para la lectura del esclavo (MODE =
+				0) se transfiere al "Modbus_Master".
+				<br>
+				<br>
+				- La ejecución y la transición al Paso 4 son las mismas que en el Paso 1.
+				<br>
+				- Después de la retroalimentación exitosa (DONE) del "Modbus_Master", los datos leídos
+				del DATA_PTR deben ser guardados (copiados).
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				
+				
+				
+															 
+			</font>  
+		 </p 																								
+														
+		</center>												   
+						     
+						
+							
+							
+							
+	   </body>
+	  
+	 </center>
+					  <HR align="center" size="2" width="1100" color= #009999 noshade>	
+					 <br>
+				<br>
+				<br>
+					  
+					
+</body>
+</html>
